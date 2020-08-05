@@ -117,49 +117,32 @@
           lonfield: 'Longitude',
           delimiter: ','
         }, function (err, data) {
-          map.on('load', function (e) {
-	
-            //Add the the layer to the map 
+          map.on('load', function () {
 		
-		   map.addLayer({
-		      'id': 'csvData',
-		      'type': 'circle',
-		      'source': {
-			'type': 'geojson',
-			'data': data
-		      },
-		      'paint': {
-			'circle-radius': 5,
-			'circle-color':  [
-				'match',
-				['get', 'Alert_temp'],
-				'1',
-				'#ff0000',
-				'0',
-				'#55ff00',
-				/* other */ '#ccc'
-				]
-		      }
+	map.loadImage(
+			'https://cdn0.iconfinder.com/data/icons/isometric-farm-vehicles/64/truck-back-03-512.png',
+		function(error, image) {
+			if (error) throw error;
+			map.addImage('truck', image);
+			
+            //Add the the layer to the map 
+			map.addLayer({
+				'id': 'points',
+				'type': 'symbol',
+				'source': {
+					'type': 'geojson',
+					'data': data
+				      },
+				'layout': {
+				'icon-size': 0.25,
+				'icon-image': 'truck'
+		        }
 		    });
-		  /*
-		map.addLayer({
-			'id': 'route',
-			'type': 'line',
-			'source': {
-				'type': 'geojson',
-				'data': e.features[0].geometry.coordinates.slice()
-		     	 },
-			'layout': {
-				'line-join': 'round',
-				'line-cap': 'round'
-			},
-			'paint': {
-				'line-color': '#888',
-				'line-width': 8
-			}
-		});
-		*/
-
+				
+	
+		}
+	);
+	
 
             // When a click event occurs on a feature in the csvData layer, open a popup at the
             // location of the feature, with description HTML from its properties.
