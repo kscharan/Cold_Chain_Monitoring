@@ -369,7 +369,7 @@ void loop(void) {
     
     if(idle_time > thresh_idle_time){
       alert_idle = 1;
-      async_timer_send();   //sends alert if idle time is greater than 1 hour
+      async_timer_send();   //sends alert if idle time is greater than threshold idle time
     }
     prev_t_GPS = current_t_GPS;
   }
